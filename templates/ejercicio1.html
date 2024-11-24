@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div>
+        <h2>Compra de Pintura</h2>
+        <form id="form-ejercicio1">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="number" name="edad" placeholder="Edad" required>
+            <input type="number" name="tarros" placeholder="Cantidad de tarros" required>
+            <button type="submit">Calcular</button>
+        </form>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        document.getElementById('form-ejercicio1').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const response = await fetch('/ejercicio1', {
+                method: 'POST',
+                body: new URLSearchParams(form)
+            });
+            const data = await response.json();
+            document.getElementById('resultado').innerHTML = `
+                <p><strong>Nombre del cliente:</strong> ${data.nombre}</p>
+                <p><strong>Total sin descuento:</strong> $${data.total_sin_descuento}</p>
+                <p><strong>El descuento es:</strong> $${data.descuento_aplicado.toFixed(2)}</p>
+                <p><strong>El total a pagar es de:</strong> $${data.total_a_pagar.toFixed(2)}</p>
+            `;
+        });
+    </script>
+</body>
+</html>

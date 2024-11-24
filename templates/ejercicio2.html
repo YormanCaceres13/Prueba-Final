@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h2>Iniciar Sesión</h2>
+    <form id="form-ejercicio2">
+        <input type="text" name="usuario" placeholder="Usuario" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+    <div id="mensaje"></div>
+
+    <script>
+        document.getElementById('form-ejercicio2').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const response = await fetch('/ejercicio2', {
+                method: 'POST',
+                body: new URLSearchParams(form)
+            });
+            const data = await response.json();
+            document.getElementById('mensaje').innerText = data.mensaje;
+        });
+    </script>
+</body>
+</html>
